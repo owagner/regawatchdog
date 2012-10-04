@@ -1,0 +1,12 @@
+  Homematic CCU ReGaHSS Watchdog
+  Written by Oliver Wagner <owagner@vapor.com>
+
+  How this works:
+
+  We monitor whether the system variable WATCHDOG was modified within the last
+  3 minutes. If not, we kill the last generated ReGaHSS forked process.
+
+  If we can't determine the variable timestamp after 60 minutes,
+  or if there is no ReGaHSS instance, we reboot.
+
+  Additionally, we're using the system watchdog /dev/watchdog.

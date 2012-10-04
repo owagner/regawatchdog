@@ -1,0 +1,40 @@
+#!/bin/sh
+REGAWATCHDOGDIR=/usr/local/addons/regawatchdog
+
+case "$1" in
+  ""|start)
+	$REGAWATCHDOGDIR/regawatchdog >/dev/null 2>&1 &
+ 	logger -t homematic -p user.info "regawatchdog started"
+	;;
+
+  restart)
+	killall -TERM regawatchdog >/dev/null 2>&1 || true
+	$REGAWATCHDOGDIR/regawatchdog >/dev/null 2>&1 &
+ 	logger -t homematic -p user.info "regawatchdog restarted"
+	;;
+
+  stop)
+	killall -TERM regawatchdog >/dev/null 2>&1 || true
+ 	logger -t homematic -p user.info "regawatchdog stopped"
+	;;
+
+  info)
+        echo "Info: <center><b>ReGaWatchdog</b></center><br><br>"
+        echo "Name: regawatchdog"
+        echo "Version: 0.10"
+        echo "Operations: uninstall restart"
+        ;;
+
+  uninstall)
+	logger -t homematic -p user.info "removing regawatchdog"
+	killall -TERM regawatchdog >/dev/null 2>&1 || true
+	rm -rf $REGAWATCHDOGDIR /etc/config/rc.d/regawatchdog.rc
+	;;
+
+  *)
+        echo "Usage: regawatchdog.rc {uninstall}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

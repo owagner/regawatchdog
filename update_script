@@ -1,0 +1,17 @@
+#!/bin/sh
+
+ADDON_DIR=/usr/local/addons/regawatchdog
+RCD_DIR=/usr/local/etc/config/rc.d
+
+if [ "`mount | grep mtdblock3 | wc -l`" -eq 0 ]; then
+        mount /dev/mtdblock3
+fi
+
+mkdir -p $ADDON_DIR
+chmod 777 $ADDON_DIR
+cp regawatchdog $ADDON_DIR
+chmod 0755 $ADDON_DIR/regawatchdog
+
+cp regawatchdog.rc $RCD_DIR
+chmod 0755 $RCD_DIR/regawatchdog.rc
+
